@@ -6,38 +6,40 @@ import LabelVue from './components/label.vue';
 import AlertVue from './components/alert.vue';
 import ClickButtonVue from './components/clickButton.vue';
 
-const maxTime = 10;
+const maxTime = 10; // max time in seconds
 
-const count = ref(0)
-const testOn = ref(false)
-const time = ref(maxTime)
+const count = ref(0) // number of clicks
+const testOn = ref(false) // test is running
+const time = ref(maxTime) // seconds
 
-function increment () {
+function increment() {
   count.value += 1;
 }
 
-function resetCount () {
-  testOn.value = false;
-  time.value = maxTime;
-  alert(`You have clicked ${count.value} times in 10 seconds`);
-  count.value = 0;
-}
 
-function startTimer () {
-  testOn.value = true;
-  setInterval(() => {
-    if (testOn.value) {
-      time.value--;
-    }
-  }, 1000);
-}
+setInterval(() => {
+  if (testOn.value && time.value > 1) {
+    return time.value--;
+  }
 
-watch(count , async (newCount , oldCount) => {
+  if (testOn.value && time.value > 0) {
+    time.value = 0;
+    alert(`You have clicked ${count.value} times in ${maxTime} seconds`);
+    count.value = 0;
+  }
 
-  if (oldCount === 0) {
-    startTimer();
-    await new Promise(resolve => setTimeout(resolve, 10000));
-    resetCount();
+}, 1000)
+
+watch(count, async (newCount, oldCount) => {
+
+  if (newCount === 0) {
+    testOn.value = false;
+    time.value = maxTime;
+    count.value = 0;
+  }
+
+  if (newCount > 0) {
+    testOn.value = true;
   }
 
 })
@@ -54,12 +56,11 @@ watch(count , async (newCount , oldCount) => {
 
   <ClickButtonVue :count="count" :onClick="increment"></ClickButtonVue>
 
-  <p>Time left: {{time}}</p>
+  <p>Time left: {{ time }}</p>
 
 </template>
 
 <style>
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -68,5 +69,4 @@ watch(count , async (newCount , oldCount) => {
   color: #2c3e50;
   margin-top: 60px;
 }
-
 </style>
