@@ -2,7 +2,7 @@
 
 ## Purpouse
 
-📖 Learning all the most basic Vue 3 concepts 
+📖 Learn all the most basic Vue 3 concepts 
 
 ## Technologies used 📘
 
