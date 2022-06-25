@@ -1,32 +1,28 @@
 <script setup>
 
-    defineProps({
-        count: {
-            type: Number,
-            default: 0
-        }
-    });
+import { inject } from 'vue';
+
+const count = inject('count');
 
 </script>
 
 <template>
 
     <article class="alert">
-        {{count}}
+        {{ count }}
     </article>
 
 </template>
 
 <style scoped>
-
 article {
 
     padding: 1rem;
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-bottom: 1rem;
-    background-color: #e0e0e0;
-    color: #000;
+    background-color: #000000;
+    color: rgb(255, 255, 255);
     font-size: 1.2rem;
     font-weight: bold;
     display: flex;
@@ -39,5 +35,4 @@ article {
     box-sizing: border-box;
 
 }
-
 </style>
